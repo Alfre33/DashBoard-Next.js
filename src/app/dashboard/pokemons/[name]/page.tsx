@@ -7,20 +7,19 @@ import { IoMdReturnLeft } from "react-icons/io";
 
 
 interface Props{
-    params:{id:string}
+    params:{name:string}
 }
 
 export async function generateStaticParams(){
   const static151Pokemons = Array.from({length:151}).map((v, i) => `${i + 1}`)
-  return static151Pokemons.map((id)=>({
-    id:id
+  return static151Pokemons.map((name)=>({
+    name:name
   }))
 
 }
-
 export async function generateMetadata ({params}:Props):Promise <Metadata> {
   try {
-    const {id,name}= await getPokemon(params.id)
+    const {id,name}= await getPokemon(params.name)
 
     return {
       title:`#${id} - ${name}`,
@@ -35,11 +34,11 @@ export async function generateMetadata ({params}:Props):Promise <Metadata> {
   }
 }
 
-const getPokemon = async (id:string):Promise<Pokemon> =>{
+const getPokemon = async (name:string):Promise<Pokemon> =>{
   try {    
-    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`,{
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`,{
       //  cache:"force-cache"
-       next: {
+      next: {
         revalidate: 60 * 60 * 30 * 6
       }
       })
@@ -54,7 +53,7 @@ const getPokemon = async (id:string):Promise<Pokemon> =>{
 
 export default async function PokemonPage({ params }: Props) {
 
-    const pokemon = await getPokemon(params.id);
+    const pokemon = await getPokemon(params.name);
     
   
     return (

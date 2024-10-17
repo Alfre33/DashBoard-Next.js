@@ -59,7 +59,7 @@ export const SideBar = () => {
 
       <div id="nav" className="w-full px-6">
         {
-            menuItems.map(itemMenu => <SidebarMenuItem {...itemMenu}/>)
+            menuItems.map(itemMenu => <SidebarMenuItem key={itemMenu.title} {...itemMenu}/>)
         }
       </div>
     </div>
