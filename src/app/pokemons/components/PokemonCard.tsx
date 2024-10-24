@@ -50,7 +50,7 @@ export const PokemonCard = ({ pokemon }: Props) => {
             </div>
           </Link>
           <Link
-            href="/dashboard/pokemons"
+            href="/dashboard/favorites"
             className="px-4 py-2 hover:bg-gray-100 flex"
           >
             <div className="text-gray-800">

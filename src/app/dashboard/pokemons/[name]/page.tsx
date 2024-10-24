@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { IoMdReturnLeft } from "react-icons/io";
+import { PokemonsResponse } from '../../../pokemons/interfaces/pokemons-response';
 
 
 interface Props{
@@ -11,10 +12,16 @@ interface Props{
 }
 
 export async function generateStaticParams(){
-  const static151Pokemons = Array.from({length:151}).map((v, i) => `${i + 1}`)
+  const data :PokemonsResponse=await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=151`)
+  .then(res=> res.json())
+  const static151Pokemons= data.results.map((pokemon)=>({
+    name:pokemon.name
+  }))
+
   return static151Pokemons.map((name)=>({
     name:name
-  }))
+  })
+  )
 
 }
 export async function generateMetadata ({params}:Props):Promise <Metadata> {

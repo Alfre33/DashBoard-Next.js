@@ -1,28 +1,69 @@
-'use client'
-import { useState } from "react";
+"use client";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { increment, decrement, initCounterState } from "@/store/counter/counterSlice";
+import { useEffect, useState } from "react";
 
-export const CartCounter = () => {
-  const [counter, setCounter] = useState(0);
+interface Props{
+  value:number;
+}
 
-  const increment = () => {
-    setCounter(counter + 1);
+interface ResponseCounter {
+  method: string;
+  count:  number;
+}
+
+
+const getApiCounter = async ():Promise<ResponseCounter>=>{
+const data =await fetch('/api/counter').then(response => response.json());
+return data;
+}
+
+export const CartCounter = ({ value=0 }:Props) => {
+  // const [counter, setCounter] = useState(0);
+
+  // const increment = () => {
+  //   setCounter(counter + 1);
+  // };
+  // const decrement = () => {
+  //   if (counter > 0) setCounter(counter - 1);
+  //   return;
+  // };
+
+
+  const count = useAppSelector((state) => state.counter.count);
+  const dispatch = useAppDispatch();
+
+  const onIncrement = () => {
+    dispatch(increment());
   };
-  const decrement = () => {
-    if (counter > 0) setCounter(counter - 1);
+  const OnDecrement = () => {
+    if (count > 0) dispatch(decrement());
     return;
   };
 
+  // useEffect(() => {
+  //   dispatch(initCounterState(value));
+  // }, [value,dispatch]);
+  
+  useEffect(() => {
+    getApiCounter()
+    .then(({count})=> dispatch(initCounterState(count)))
+
+  }, [dispatch]);
+
+  
+
   return (
     <>
-      <span className="text-9xl">{counter}</span>
+      <span className="text-9xl">{count}</span>
       <button
-        onClick={increment}
+        onClick={onIncrement}
         className="flex items-center justify-center p-2 rounded-xl bg-gray-900 text-white hover:bg-gray-600 transition-all w-[100px] mr-2"
       >
         +
       </button>
       <button
-        onClick={decrement}
+        onClick={OnDecrement}
         className="flex items-center justify-center p-2 rounded-xl bg-gray-900 text-white hover:bg-gray-600 transition-all w-[100px] mr-2 mt-4"
       >
         -

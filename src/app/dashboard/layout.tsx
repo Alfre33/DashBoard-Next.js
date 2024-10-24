@@ -1,4 +1,5 @@
 import { SideBar } from "@/app/components";
+import { Providers } from "@/store/Providers";
 
 export default function DashboardLayout({
 children
@@ -12,7 +13,9 @@ return (
     <div className="flex">
         <SideBar />
         <div className=" w-full text-slate-900">
+        <Providers>
             {children}
+        </Providers>
         </div>
 
     </div>

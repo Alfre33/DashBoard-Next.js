@@ -3,6 +3,7 @@ import { FaReact } from "react-icons/fa6";
 import { SidebarMenuItem } from './SidebarMenuItem';
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdCalculate,MdCatchingPokemon } from "react-icons/md";
+import { GrFavorite } from "react-icons/gr";
 
 const menuItems=[
     {
@@ -22,6 +23,12 @@ const menuItems=[
         icon: <MdCatchingPokemon size={30} />,
         title: 'Pokemons',
         subTitle:'Lista de pokemons'
+    },
+    {
+        path:'/dashboard/favorites',
+        icon: <GrFavorite size={30} />,
+        title: 'Favoritos',
+        subTitle:'Pokemons favoritos'
     },
 ]
 export const SideBar = () => {
