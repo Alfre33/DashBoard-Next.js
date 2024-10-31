@@ -18,7 +18,7 @@ export async function generateStaticParams(){
     name:pokemon.name
   }))
 
-  return static151Pokemons.map((name)=>({
+  return static151Pokemons.map(({name})=>({
     name:name
   })
   )

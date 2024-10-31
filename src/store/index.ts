@@ -8,7 +8,8 @@ export const store = configureStore({
   reducer: {
     counter:CounterReducer,
     favorites:FavoritesReducer
-},
+  },
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

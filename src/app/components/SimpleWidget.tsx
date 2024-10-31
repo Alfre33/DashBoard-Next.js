@@ -1,6 +1,4 @@
-import { useAppSelector } from "@/store"
 import Link from "next/link";
-import { IoCafeOutline } from "react-icons/io5"
 
 interface Props{
   counter:{

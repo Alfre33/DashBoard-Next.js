@@ -1,8 +1,11 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { DataPokemon } from "../interfaces/pokemon-data";
-import { GrFavorite } from "react-icons/gr";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { ImPower } from "react-icons/im";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { toggleFavorite } from "@/store/favorites/favoritesSlice";
 
 interface Props {
   pokemon: DataPokemon;
@@ -10,6 +13,12 @@ interface Props {
 
 export const PokemonCard = ({ pokemon }: Props) => {
   const { id, name } = pokemon;
+
+  const isFavorite = useAppSelector((state) => !!state.favorites.favoritesList[id]);
+  const dispatch = useAppDispatch();
+  const onToogle = () => {
+    dispatch(toggleFavorite(pokemon))
+  }
   return (
     <div className="mx-auto right-0 mt-2 w-60">
       <div className="bg-white rounded overflow-hidden shadow-lg">
@@ -49,20 +58,28 @@ export const PokemonCard = ({ pokemon }: Props) => {
               <p className="text-xs text-gray-500">Ver sus habilidades</p>
             </div>
           </Link>
-          <Link
-            href="/dashboard/favorites"
-            className="px-4 py-2 hover:bg-gray-100 flex"
+          <div
+          onClick={onToogle}
+            className="px-4 py-2 hover:bg-gray-100 flex cursor-pointer"
           >
             <div className="text-gray-800">
-              <GrFavorite size={30} color="red" />
+              {isFavorite ? (
+                <IoHeart size={30} color="red" />
+              ) : (
+                <IoHeartOutline size={30} color="red" />
+              )}
             </div>
             <div className="pl-3">
               <p className="text-sm font-medium text-gray-800 leading-none">
-                Favoritos
+                {isFavorite ? "Ya es favorito" : "No es favorito"}
               </p>
-              <p className="text-xs text-gray-500">Agregalo a tus favoritos</p>
+              <p className="text-xs text-gray-500">
+                {isFavorite
+                  ? "Éliminalo de tus favoritos"
+                  : "Agregalo a tus favoritos"}
+              </p>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
